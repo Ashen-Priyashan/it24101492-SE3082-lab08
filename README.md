@@ -41,3 +41,15 @@ CSV table plus separate time and speedup SVG charts for both workloads into
 the time at each process count. For the pi workload, one process computes the
 samples itself; with multiple processes, rank 0 distributes work to workers.
 
+## Exercise 5: unmatched messages and buffered sends
+
+Run `mpiexec -n 3 message_mismatch.exe` to observe that rank 1 waits for a
+message from rank 2, although rank 0 sends to rank 1. The receive has no
+matching send, so the blocking receive does not complete and the program does
+not finish normally. Stop the run after observing the printed ranks (for
+example, with Ctrl+C).
+
+`message2_bsend.exe` uses a buffered send while keeping the same `message`
+data at the sender. It attaches enough storage for the packed message before
+calling `MPI_Bsend`.
+
