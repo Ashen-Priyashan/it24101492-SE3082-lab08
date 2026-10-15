@@ -16,10 +16,16 @@ argument.
 
 ## Build and run
 
-With an MPI C compiler and runtime on `PATH`, build the programs with:
+With an MPI C compiler and runtime on `PATH`, Windows users can build the
+programs from PowerShell with:
+
+```powershell
+.\build.ps1
+```
+
+Other environments can use `make`. Then run:
 
 ```sh
-make
 mpiexec -n 4 sum_mpi.exe
 mpiexec -n 4 pi_monte_carlo.exe
 ```
