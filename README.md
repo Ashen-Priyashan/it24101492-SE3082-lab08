@@ -53,3 +53,10 @@ example, with Ctrl+C).
 data at the sender. It attaches enough storage for the packed message before
 calling `MPI_Bsend`.
 
+## Exercise 6: receive from any worker
+
+`pi_any_source.exe` runs the same ten-million-point Monte Carlo workload as
+Exercise 3. The coordinator receives each result using `MPI_ANY_SOURCE` and
+the result tag, so worker completion order does not have to match rank order.
+The reported estimate should be close to pi; timings can vary between runs.
+

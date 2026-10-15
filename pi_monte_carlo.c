@@ -67,16 +67,7 @@ int main(int argc, char **argv)
         MPI_Recv(&assigned, 1, MPI_UINT64_T, 0, WORK_TAG,
                  MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         uint64_t worker_hits = count_hits(assigned, 0x9e3779b97f4a7c15ULL ^ (uint64_t)rank);
-#ifdef BUFFERED_RESULT_SEND
-        unsigned char buffer[MPI_BSEND_OVERHEAD + sizeof(worker_hits)];
-        MPI_Buffer_attach(buffer, (int)sizeof(buffer));
-        MPI_Bsend(&worker_hits, 1, MPI_UINT64_T, 0, RESULT_TAG, MPI_COMM_WORLD);
-        void *detached_buffer = NULL;
-        int detached_size = 0;
-        MPI_Buffer_detach(&detached_buffer, &detached_size);
-#else
         MPI_Send(&worker_hits, 1, MPI_UINT64_T, 0, RESULT_TAG, MPI_COMM_WORLD);
-#endif
     }
 
     elapsed = MPI_Wtime() - started;
