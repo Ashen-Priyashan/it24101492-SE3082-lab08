@@ -1,9 +1,5 @@
 # SE3082 Lab 08 - MPI
 
-This repository contains my solutions for the MPI lab exercises. Exercise 0 is
-intentionally omitted as requested. The lab sheet calls this Lab 6, but this
-repository is for Lab 8.
-
 ## Exercises
 
 - Exercise 1: repository setup and version control.
