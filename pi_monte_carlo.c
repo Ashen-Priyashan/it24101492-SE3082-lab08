@@ -67,7 +67,24 @@ int main(int argc, char **argv)
         MPI_Recv(&assigned, 1, MPI_UINT64_T, 0, WORK_TAG,
                  MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         uint64_t worker_hits = count_hits(assigned, 0x9e3779b97f4a7c15ULL ^ (uint64_t)rank);
+#ifdef BUFFERED_RESULT_SEND
+        int packed_size = 0;
+        MPI_Pack_size(1, MPI_UINT64_T, MPI_COMM_WORLD, &packed_size);
+        int buffer_size = packed_size + MPI_BSEND_OVERHEAD;
+        void *buffer = malloc((size_t)buffer_size);
+        if (buffer == NULL) {
+            fprintf(stderr, "Rank %d could not allocate its buffered-send space.\n", rank);
+            MPI_Abort(MPI_COMM_WORLD, EXIT_FAILURE);
+        }
+        MPI_Buffer_attach(buffer, buffer_size);
+        MPI_Bsend(&worker_hits, 1, MPI_UINT64_T, 0, RESULT_TAG, MPI_COMM_WORLD);
+        void *detached_buffer = NULL;
+        int detached_size = 0;
+        MPI_Buffer_detach(&detached_buffer, &detached_size);
+        free(detached_buffer);
+#else
         MPI_Send(&worker_hits, 1, MPI_UINT64_T, 0, RESULT_TAG, MPI_COMM_WORLD);
+#endif
     }
 
     elapsed = MPI_Wtime() - started;

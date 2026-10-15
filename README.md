@@ -60,3 +60,12 @@ Exercise 3. The coordinator receives each result using `MPI_ANY_SOURCE` and
 the result tag, so worker completion order does not have to match rank order.
 The reported estimate should be close to pi; timings can vary between runs.
 
+## Exercise 7: buffered worker replies
+
+`pi_any_source_bsend.exe` keeps the `MPI_ANY_SOURCE` coordinator receive and
+changes each worker's result send to `MPI_Bsend`. Each worker attaches a buffer
+large enough for the packed 64-bit result, sends it, detaches the buffer, and
+then frees the detached storage. It uses the same sample count and random
+sequence as the other pi program variants, so the estimate is identical for a
+given process count.
+

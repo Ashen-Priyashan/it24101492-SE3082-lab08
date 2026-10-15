@@ -1,6 +1,7 @@
 MPICC ?= mpicc
 CFLAGS ?= -O2 -Wall -Wextra -std=c11
 EXE = .exe
+SHELL = cmd.exe
 
 all: sum_mpi$(EXE) pi_monte_carlo$(EXE) pi_any_source$(EXE) pi_any_source_bsend$(EXE) message_mismatch$(EXE) message2_bsend$(EXE)
 
