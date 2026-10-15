@@ -10,10 +10,6 @@
 - Exercise 6: Monte Carlo result collection with `MPI_ANY_SOURCE`.
 - Exercise 7: buffered result sends with `MPI_ANY_SOURCE` receives.
 
-The C programs use 64-bit unsigned integers for work counts and sums. The
-default run sizes match the lab sheet and can be overridden with a command-line
-argument.
-
 ## Build and run
 
 With an MPI C compiler and runtime on `PATH`, Windows users can build the
